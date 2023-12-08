@@ -1,0 +1,62 @@
+*** Settings ***
+Documentation    To Test login.
+Library         SeleniumLibrary
+#Library         SeleniumLibrary    executable_path=/Users/sudhi/AppData/Local/Programs/Python/Python310/Scripts/
+Library         Collections
+Library         path.to.your.module
+
+*** Variable ***
+${useremailid}      devi_sudhir@yahoo.com
+${userpassword}     sdak@123
+${My_URL}           https://app.vshops.fi/
+${My_Path}          /Users/sudhi/AppData/Local/Programs/Python/Python310/Scripts/chromedriver
+
+
+*** Test Cases ***
+Validate Successful Login
+    Open the browser with url
+    login with username and password
+
+Go For Shopping
+    Select a shop
+#    Add a product
+ #   Go to checkout
+
+
+*** Keywords ***
+
+
+Open the browser with url
+    Open Browser    ${My_URL}    chrome
+    maximize browser window
+
+    # Add a wait to ensure the page is fully loaded
+    Wait Until Page Contains Element    xpath=//button[contains(text(), 'Yes')]
+    Click Element    xpath=//button[contains(text(), 'Yes')]
+    log     "Cokkies accepted"
+
+    sleep   2
+
+
+login with username and password
+    # click on Sign Up
+    click element       //*[@id="root"]/header/div/div[3]/div/div[2]/div
+
+    # Find the modal container
+    Wait Until Page Contains Element    //div[@class="authenticate_registerContainer__6N8mF"]
+    Wait Until Page Contains Element    //div[@class="authenticate_switchLink__uwUqP"]
+    # Click on Existing user
+    click element       //div[@class="authenticate_switchLink__uwUqP"]
+    # Enter user email id and password and login
+    Input Text    //*[@id="Email"]    ${useremailid}
+    Input Text    //*[@id="Password"]    ${userpassword}
+    click button    //*[@id="root"]/div[2]/div/div/form/div[2]/button
+
+
+Select a shop
+    # select LENSMATES
+    click element   xpath=(//img[@class="card_image__GgS2z"])[4]
+
+
+
+
